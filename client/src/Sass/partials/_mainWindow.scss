@@ -1,0 +1,51 @@
+.boardgame {
+  background-image: url(../assets/images/20200914_211917.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.main-window {
+  width: 80%;
+  &__player-board {
+    width: 80%;
+    height: 80%;
+  }
+}
+
+.player-window {
+  width: 20%;
+}
+.header {
+  color: white;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  &__logo-container {
+    width: 50%;
+    margin-left: 20px;
+  }
+  &__title {
+  }
+  &__sub-title {
+    margin: 0;
+  }
+  &__text-container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-right: 20px;
+  }
+  &__text {
+    margin: 0;
+    font-size: 14px;
+  }
+}

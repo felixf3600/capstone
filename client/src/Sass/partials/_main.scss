@@ -1,0 +1,47 @@
+.main,
+.create-room,
+.player,
+.spectators {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-image: url(../assets/images/20200914_211917.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba($color: black, $alpha: 0.3);
+  }
+  &__title {
+    color: white;
+  }
+  &__text {
+    color: white;
+  }
+  &__button {
+    background-color: yellow;
+    width: 100px;
+    height: 50px;
+    border: none;
+    border-radius: 20px;
+    color: red;
+  }
+  &__button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+    margin-bottom: 50px;
+  }
+  &__button-create {
+  }
+  &__button-join {
+  }
+  &__button-spectate {
+  }
+}
