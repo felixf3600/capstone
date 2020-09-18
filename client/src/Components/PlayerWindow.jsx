@@ -3,9 +3,10 @@ import React from "react";
 
 const PlayerWindow = ({ players }) => {
   console.log(players);
-  const playerDiv = players.map((player) => {
+  if (!players) return <p>loading</p>;
+  const playerDiv = players.map((player, index) => {
     return (
-      <div className="player-window__container">
+      <div key={index} className="player-window__container">
         <p className="player-window__player-name">{player.name}</p>
         <p className="player-window__score">{player.columns}</p>
       </div>

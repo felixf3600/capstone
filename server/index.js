@@ -74,7 +74,7 @@ io.on("connection", (socket) => {
     const index = 0;
     // const start = allPlayersOk();
     const user = getUser(socket.id);
-    console.log(user);
+    console.log("start", user);
     const currentBoard = getNewBoard(); //need to write
     const mainBoard = getMainBoard(); //need to write
     io.in(user.room).emit("started", {

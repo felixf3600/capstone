@@ -587,13 +587,24 @@ select:focus {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+#root {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .boardgame {
   background-image: url(../assets/images/20200914_211917.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom;
-  height: 100%;
-  width: 100%;
+  width: 1400px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -603,24 +614,144 @@ select:focus {
           flex-direction: row;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .main-window {
-  width: 80%;
+  background-color: red;
+  opacity: 0.3;
+  width: 1000px;
+  margin-top: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .main-window__player-board {
-  width: 80%;
-  height: 80%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 800px;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
 }
 
-.player-window {
-  width: 20%;
+.main-window__column {
+  height: 650px;
+  width: 60px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  background-color: white;
+}
+
+.main-window__pos {
+  height: 60px;
+  width: 60px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  background-color: black;
+  margin-bottom: 20px;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main-window__player2, .main-window__player1, .main-window__player3, .main-window__player4, .main-window__empty, .main-window__temp {
+  height: 20px;
+  width: 20px;
+  border-radius: 20px;
+  z-index: 99;
+}
+
+.main-window__player1 {
+  background-color: green;
+}
+
+.main-window__player2 {
+  background-color: red;
+}
+
+.main-window__player3 {
+  background-color: yellow;
+}
+
+.main-window__player4 {
+  background-color: purple;
+}
+
+.main-window__empty {
+  background-color: white;
+  opacity: 0.2;
+}
+
+.main-window__temp {
+  background-color: white;
+  opacity: 1;
+}
+
+.main-window__dice-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding-top: 20px;
+}
+
+.main-window__dice-set {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.main-window__dice-all {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100px;
+  width: 200px;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.main-window__die {
+  font-size: 50px;
+  font-weight: bolder;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: white;
+  width: 70px;
+  height: 70px;
+  text-align: center;
 }
 
 .header {
   color: white;
-  width: 100%;
+  width: 1600px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -663,5 +794,43 @@ select:focus {
 .header__text {
   margin: 0;
   font-size: 14px;
+}
+
+.player-window {
+  padding-top: 20px;
+  margin-top: 50px;
+  width: 200px;
+  background-color: white;
+  opacity: 0.5;
+  font-weight: bolder;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.player-window__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.player-window__container:nth-child(1) {
+  background-color: green;
+}
+
+.player-window__container:nth-child(2) {
+  background-color: red;
+}
+
+.player-window__container:nth-child(3) {
+  background-color: yellow;
+}
+
+.player-window__container:nth-child(4) {
+  background-color: purple;
+}
+
+.player-window__player-name {
+  margin-right: 10px;
 }
 /*# sourceMappingURL=App.css.map */

@@ -1,29 +1,115 @@
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .boardgame {
   background-image: url(../assets/images/20200914_211917.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom;
-  height: 100%;
-  width: 100%;
+  width: 1400px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .main-window {
-  width: 80%;
+  background-color: red;
+  opacity: 0.3;
+  width: 1000px;
+  margin-top: 50px;
+  display: flex;
+
   &__player-board {
-    width: 80%;
-    height: 80%;
+    display: flex;
+    width: 800px;
+    justify-content: space-evenly;
+  }
+  &__column {
+    height: 650px;
+    width: 60px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    background-color: white;
+    // opacity: 0.5;
+  }
+  &__pos {
+    height: 60px;
+    width: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: black;
+    // opacity: 0.5;
+    margin-bottom: 20px;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  &__player2,
+  &__player1,
+  &__player3,
+  &__player4,
+  &__empty,
+  &__temp {
+    height: 20px;
+    width: 20px;
+    border-radius: 20px;
+    z-index: 99;
+  }
+  &__player1 {
+    background-color: green;
+  }
+  &__player2 {
+    background-color: red;
+  }
+  &__player3 {
+    background-color: yellow;
+  }
+  &__player4 {
+    background-color: purple;
+  }
+  &__empty {
+    background-color: white;
+    opacity: 0.2;
+  }
+  &__temp {
+    background-color: white;
+    opacity: 1;
+  }
+  &__dice-container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+  }
+  &__dice-set {
+    display: flex;
+    flex-direction: column;
+  }
+  &__dice-all {
+    display: flex;
+    height: 100px;
+    width: 200px;
+    justify-content: space-evenly;
+  }
+  &__dice-selection {
+  }
+  &__die {
+    font-size: 50px;
+    font-weight: bolder;
+    border: 1px solid black;
+    border-radius: 5px;
+    color: white;
+    width: 70px;
+    height: 70px;
+    text-align: center;
   }
 }
 
-.player-window {
-  width: 20%;
-}
 .header {
   color: white;
-  width: 100%;
+  width: 1600px;
   display: flex;
   flex-direction: row;
   height: fit-content;
@@ -47,5 +133,35 @@
   &__text {
     margin: 0;
     font-size: 14px;
+  }
+}
+.player-window {
+  padding-top: 20px;
+  margin-top: 50px;
+  width: 200px;
+  background-color: white;
+  opacity: 0.5;
+  font-weight: bolder;
+
+  height: fit-content;
+  &__container {
+    display: flex;
+    &:nth-child(1) {
+      background-color: green;
+    }
+    &:nth-child(2) {
+      background-color: red;
+    }
+    &:nth-child(3) {
+      background-color: yellow;
+    }
+    &:nth-child(4) {
+      background-color: purple;
+    }
+  }
+  &__player-name {
+    margin-right: 10px;
+  }
+  &__score {
   }
 }

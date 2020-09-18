@@ -15,7 +15,7 @@ const Game = (props) => {
   const [room, setRoom] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [curentPlayer, setCurrentPlayer] = useState("");
+  const [currentPlayer, setCurrentPlayer] = useState(false);
   const [gameStart, setGameStart] = useState(false);
   const [spectators, setSpectators] = useState([]);
   const [players, setPlayers] = useState([]);
@@ -48,20 +48,29 @@ const Game = (props) => {
   }, [ENDPOINT, props.location.state]);
 
   const startGame = () => {
+    console.log("start");
     socket.emit("start");
   };
   useEffect(() => {
     socket.on("started", (info) => {
-      socket.id === players[info.currentPlayerIndex]
-        ? setCurrentPlayer(true)
-        : setCurrentPlayer(false);
+      // const player = players[info.index];
+      setCurrentPlayer(true);
+      if (!players.length) return <p>loading</p>;
+      console.log(socket.id, players[info.index].id);
+      if (socket.id === players[info.index].id) {
+        setCurrentPlayer(true);
+        console.log("currentPlayer is true", currentPlayer);
+      } else {
+        // setCurrentPlayer(false);
+        console.log("currentPlayer is false");
+      }
+      setPlayer(info.index);
       setCurrentBoard(info.currentBoard);
       setGameStart(true);
-      while (gameStart) {
-        game();
-      }
+      console.log(currentPlayer);
+      gameTurn();
     });
-  });
+  }, [currentBoard, currentPlayer, players]);
   useEffect(() => {
     socket.on("player", (playerInfo) => {
       setPlayers(playerInfo.players);
@@ -81,7 +90,7 @@ const Game = (props) => {
     const dice2 = randomDice();
     const dice3 = randomDice();
     const dice4 = randomDice();
-
+    console.log("dice roll");
     setDiceArray([
       {
         dice: { set1: dice1 + dice2, set2: dice3 + dice4 },
@@ -111,15 +120,19 @@ const Game = (props) => {
       });
     },
     [currentBoard],
-    [curentPlayer]
+    [currentPlayer]
   );
 
   const randomDice = () => {
-    return Math.ciel(Math.random() * 6);
+    return Math.ceil(Math.random() * 6);
   };
   const checkBustStatus = () => {
     const displayDice = diceArray;
-    const temporaryBoard = currentBoard.playerBoards[playerOrder - 1];
+    console.log(currentBoard);
+    if (!currentBoard.length) {
+      return <p>loading</p>;
+    }
+    const temporaryBoard = currentBoard.playerBoards[playerOrder];
     let busted = true;
     let selectionArray = [];
     // checks to see if busted by full column
@@ -182,12 +195,11 @@ const Game = (props) => {
   const updateMessageWindow = () => {
     // updates the message window
   };
-  const game = () => {
-    if (curentPlayer) {
-      while (!busted)
-        //logic while its this players turn
-        //get current board automatic from backend when current player ends
-        diceRoll();
+  const gameTurn = () => {
+    if (currentPlayer) {
+      //logic while its this players turn
+      //get current board automatic from backend when current player ends
+      diceRoll();
       checkBustStatus(); //broadcast roll
       //select dice and broadcast
       //modal to continue
@@ -219,7 +231,6 @@ const Game = (props) => {
         players={players}
         name={name}
         setGameStart={startGame}
-        game={game}
       />
     </div>
   );
