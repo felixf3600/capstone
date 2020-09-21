@@ -2,7 +2,6 @@ import React from "react";
 // import { allPlayersOk } from "../../../server/users";
 
 const PlayerWindow = ({ players }) => {
-  console.log(players);
   if (!players) return <p>loading</p>;
   const playerDiv = players.map((player, index) => {
     return (

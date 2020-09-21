@@ -1,8 +1,9 @@
 const users = [];
 const players = [];
 let currentPlayer = 0;
-let playerCount = 0;
 let playerStart = 0;
+let diceSet = [];
+let diceArray = [];
 const playerBoard = {
   column1: 0,
   column2: 0,
@@ -29,6 +30,50 @@ const mainBoard = [
   { max: 4, full: false, player: "" },
   { max: 3, full: false, player: "" },
 ];
+const randomDice = () => {
+  return Math.ceil(Math.random() * 6);
+};
+
+const getDiceSet = () => {
+  return diceSet;
+};
+const rollDice = () => {
+  const dice1 = randomDice();
+  const dice2 = randomDice();
+  const dice3 = randomDice();
+  const dice4 = randomDice();
+  diceSet = [dice1, dice2, dice3, dice4];
+};
+const setDiceArray = () => {
+  const diceArray = [
+    {
+      dice: {
+        set1: diceSet[0] + diceSet[1],
+        set2: diceSet[2] + diceSet[3],
+      },
+      set1: false,
+      set2: false,
+    },
+    {
+      dice: {
+        set1: diceSet[0] + diceSet[2],
+        set2: diceSet[1] + diceSet[3],
+      },
+      set1: false,
+      set2: false,
+    },
+    {
+      dice: {
+        set1: diceSet[0] + diceSet[3],
+        set2: diceSet[1] + diceSet[2],
+      },
+      set1: false,
+      set2: false,
+    },
+  ];
+  return diceArray;
+};
+
 const playerBoards = [playerBoard, playerBoard, playerBoard, playerBoard];
 const getNextPlayer = (playerIndex) => {
   if (currentPlayer + 1 === null) currentPlayer = 0;
@@ -62,9 +107,12 @@ const addUser = ({ id, name, room, player, columns }) => {
   // }
   return { user };
 };
-const allPlayersOk = () => {
+const allPlayersOk = (room) => {
   playerStart++;
-  if (playerStart === playerCount) return true;
+  const playersInRoom = getPlayersInRoom(room);
+  console.log(playerStart, playersInRoom);
+  if (playerStart === playersInRoom.length) return true;
+  else false;
 };
 const removeUser = (id) => {
   const index = users.findIndex((user) => user.id === id);
@@ -87,4 +135,7 @@ module.exports = {
   getNewBoard,
   getMainBoard,
   getPlayersInRoom,
+  getDiceSet,
+  setDiceArray,
+  rollDice,
 };

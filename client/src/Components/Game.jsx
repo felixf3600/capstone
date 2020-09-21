@@ -15,7 +15,6 @@ const Game = (props) => {
   const [room, setRoom] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [currentPlayer, setCurrentPlayer] = useState(false);
   const [gameStart, setGameStart] = useState(false);
   const [spectators, setSpectators] = useState([]);
   const [players, setPlayers] = useState([]);
@@ -25,7 +24,8 @@ const Game = (props) => {
   const [currentBoard, setCurrentBoard] = useState([]); // player board array
   const [mainBoardsStatus, setMainBoardStatus] = useState([]); // main board
   const [diceArray, setDiceArray] = useState([]);
-
+  const [diceSet, setDiceSet] = useState([]);
+  let currentPlayer = false;
   const ENDPOINT = "localhost:5000";
 
   // this is the is the main states.
@@ -48,36 +48,36 @@ const Game = (props) => {
   }, [ENDPOINT, props.location.state]);
 
   const startGame = () => {
-    console.log("start");
     socket.emit("start");
   };
+
   useEffect(() => {
     socket.on("started", (info) => {
-      // const player = players[info.index];
-      setCurrentPlayer(true);
+      console.log(players, info);
       if (!players.length) return <p>loading</p>;
       console.log(socket.id, players[info.index].id);
       if (socket.id === players[info.index].id) {
-        setCurrentPlayer(true);
-        console.log("currentPlayer is true", currentPlayer);
+        currentPlayer = true;
       } else {
-        // setCurrentPlayer(false);
-        console.log("currentPlayer is false");
+        currentPlayer = false;
       }
-      setPlayer(info.index);
-      setCurrentBoard(info.currentBoard);
+      setDiceSet(info.diceSet);
+      setDiceArray(info.diceArray);
+      console.log(diceArray, diceSet);
       setGameStart(true);
-      console.log(currentPlayer);
       gameTurn();
     });
-  }, [currentBoard, currentPlayer, players]);
+  }, [players, diceSet, diceArray]);
   useEffect(() => {
-    socket.on("player", (playerInfo) => {
-      setPlayers(playerInfo.players);
+    socket.on("player", (info) => {
+      console.log(info);
+      setPlayers(info.players);
+      setCurrentBoard(info.currentBoard);
+      setMainBoardStatus(info.mainBoard);
 
-      console.log(playerInfo, players);
+      // console.log(info, players);
     });
-  }, [players]);
+  }, [players, currentBoard, mainBoardsStatus]);
 
   useEffect(() => {
     socket.on("spectator", (spectator) => {
@@ -85,35 +85,11 @@ const Game = (props) => {
     });
   }, [spectators]);
 
-  const diceRoll = () => {
-    const dice1 = randomDice();
-    const dice2 = randomDice();
-    const dice3 = randomDice();
-    const dice4 = randomDice();
-    console.log("dice roll");
-    setDiceArray([
-      {
-        dice: { set1: dice1 + dice2, set2: dice3 + dice4 },
-        set1: false,
-        set2: false,
-      },
-      {
-        dice: { set1: dice1 + dice3, set2: dice2 + dice4 },
-        set1: false,
-        set2: false,
-      },
-      {
-        dice: { set1: dice1 + dice4, set2: dice2 + dice3 },
-        set1: false,
-        set2: false,
-      },
-    ]);
-  };
   useEffect(
     () => {
       socket.on("currentPlayer", (player, gameBoard, playerBoards) => {
         if (player === socket.id) {
-          setCurrentPlayer(true);
+          // setCurrentPlayer(true);
         }
         setCurrentBoard(playerBoards);
         setMainBoardStatus(gameBoard);
@@ -123,47 +99,43 @@ const Game = (props) => {
     [currentPlayer]
   );
 
-  const randomDice = () => {
-    return Math.ceil(Math.random() * 6);
-  };
   const checkBustStatus = () => {
-    const displayDice = diceArray;
     console.log(currentBoard);
     if (!currentBoard.length) {
       return <p>loading</p>;
     }
-    const temporaryBoard = currentBoard.playerBoards[playerOrder];
+    const temporaryBoard = currentBoard[playerOrder];
     let busted = true;
     let selectionArray = [];
     // checks to see if busted by full column
-    !mainBoardsStatus[displayDice[0].dice.set1 - 2].full
+    !mainBoardsStatus[diceArray[0].dice.set1 - 2].full
       ? (busted = false)
-      : (displayDice[0].set1 = true);
-    !mainBoardsStatus[displayDice[0].dice.set2 - 2].full
+      : (diceArray[0].set1 = true);
+    !mainBoardsStatus[diceArray[0].dice.set2 - 2].full
       ? (busted = false)
-      : (displayDice[0].set2 = true);
-    !mainBoardsStatus[displayDice[1].dice.set1 - 2].full
+      : (diceArray[0].set2 = true);
+    !mainBoardsStatus[diceArray[1].dice.set1 - 2].full
       ? (busted = false)
-      : (displayDice[1].set1 = true);
-    !mainBoardsStatus[displayDice[1].dice.set2 - 2].full
+      : (diceArray[1].set1 = true);
+    !mainBoardsStatus[diceArray[1].dice.set2 - 2].full
       ? (busted = false)
-      : (displayDice[1].set2 = true);
-    !mainBoardsStatus[displayDice[2].dice.set1 - 2].full
+      : (diceArray[1].set2 = true);
+    !mainBoardsStatus[diceArray[2].dice.set1 - 2].full
       ? (busted = false)
-      : (displayDice[2].set1 = true);
-    !mainBoardsStatus[displayDice[2].dice.set2 - 2].full
+      : (diceArray[2].set1 = true);
+    !mainBoardsStatus[diceArray[2].dice.set2 - 2].full
       ? (busted = false)
-      : (displayDice[2].set2 = true);
+      : (diceArray[2].set2 = true);
     // checks to see if there are enough moves and if at least one number matches.
 
     selectionArray = [
       //grabs the list of numbers into an array
-      !displayDice[0].set1 ? displayDice[0].dice.set1 : null,
-      !displayDice[0].set2 ? displayDice[0].dice.set2 : null,
-      !displayDice[1].set1 ? displayDice[1].dice.set1 : null,
-      !displayDice[1].set2 ? displayDice[1].dice.set2 : null,
-      !displayDice[2].set1 ? displayDice[2].dice.set1 : null,
-      !displayDice[2].set2 ? displayDice[2].dice.set2 : null,
+      !diceArray[0].set1 ? diceArray[0].dice.set1 : null,
+      !diceArray[0].set2 ? diceArray[0].dice.set2 : null,
+      !diceArray[1].set1 ? diceArray[1].dice.set1 : null,
+      !diceArray[1].set2 ? diceArray[1].dice.set2 : null,
+      !diceArray[2].set1 ? diceArray[2].dice.set1 : null,
+      !diceArray[2].set2 ? diceArray[2].dice.set2 : null,
     ];
     //checks to see if the numbers in moves are present in the number array
     let newSelectionArray = [];
@@ -199,7 +171,6 @@ const Game = (props) => {
     if (currentPlayer) {
       //logic while its this players turn
       //get current board automatic from backend when current player ends
-      diceRoll();
       checkBustStatus(); //broadcast roll
       //select dice and broadcast
       //modal to continue
@@ -217,6 +188,7 @@ const Game = (props) => {
         diceArray={diceArray}
         setMoves={setMoves}
         moves={moves}
+        diceSet={diceSet}
       />
       <PlayerWindow players={players} />
       <RulesWindow />

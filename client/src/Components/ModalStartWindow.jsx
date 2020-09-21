@@ -4,13 +4,11 @@ import { Modal, Button } from "react-bootstrap";
 const ModalStartWindow = ({ room, players, name, setGameStart }) => {
   const [show, setShow] = useState(true);
   const handleClose = () => setShow(false);
-  console.log(players);
   let playerList;
   if (!players) {
     return <p>loading</p>;
   }
   playerList = players.map((player) => player.name);
-  console.log(players, playerList);
 
   if (name) {
     return (

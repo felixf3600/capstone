@@ -1,0 +1,47 @@
+# Can't stop BoardGame
+
+## Description
+This is my rendition of the BoardGame Cant Stop. A push your luck game where you you roll dice and go up columns. Each round consists of rolling dice and deciding if which columns to go up on. You can only go up 3 different columns each round. If there are no other options then you bust and you loose all the gains you had that round. To prevent that you have to decide to stop. The first person to get 3 columns wins. 
+
+## technologies
+### React
+I am using React as the client. 
+
+#### hooks
+I am using useState and useEffect hooks.
+
+#### modals
+I am using react.bootstrap for modal
+
+### SASS
+ 
+### Express
+Express is used as the server side 
+
+### NODE
+needed to install the various libraries
+
+### socket.io
+This is the library used to make this a multiplayer game
+
+## How this works
+currently still under construction. So far, you can open multiple windows and create/ join a room. the room has to match in order for it to work. once every one joins then they can press ok.. this will set the first person to log in as the first player and no one else will be able to do anyting. 
+
+## Dificulties
+### inexperience in making games
+because of my inexperience making games, I decided to start with a client based framework. I did this because I wanted to take the strain of the server and have all the heavy lifting done by the client. a couple of days before the dateline I realized I needed to transfer things to the backend to make this work better. 
+
+I also misjudged the logic I needed to do. It sounds simple but inorder to accomplish this (and I have not finished because I just realized that displaying the board positions is not as simple as I thought). 
+
+### react asynch
+This has been my bane. I am using useState to set up my state and then when I set that state, it does not set. Console.log would show it has not changed and it did not change with useEffect. 
+
+        setCurrentPlayer(true);
+        console.log("currentPlayer is true", currentPlayer);
+
+the above would give me "currentPlayer is true, false". 
+
+## Next Step
+I need to redo everything and switch to backend in order to communicate more freely between windows. (already started) Once this is done then displaying the changes will be possible. As well as displaying messages of whats going on to the other windows.
+I need to change the state and remove most of my hooks as I am thinking thats whats causing the issues with not updating my states. 
+I need to workout the last bit of logic to display the columns property

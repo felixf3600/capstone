@@ -12,6 +12,9 @@ const {
   getMainBoard,
   getNewBoard,
   getPlayersInRoom,
+  getDiceSet,
+  setDiceArray,
+  rollDice,
 } = require("./users.js");
 
 const PORT = process.env.PORT || 5000;
@@ -47,8 +50,9 @@ io.on("connection", (socket) => {
     io.in(user.room).emit("player", {
       // user: "player",
       players: getPlayersInRoom(user.room),
+      currentBoard: getNewBoard(),
+      mainBoard: getMainBoard(),
     }); // retuyrns player to the modalwindow to see the players ready to play
-    // } else {
     io.in(user.room).emit("spectator", {
       user: "spectator",
       text: `${user.name} is watching`,
@@ -72,16 +76,15 @@ io.on("connection", (socket) => {
   });
   socket.on("start", () => {
     const index = 0;
-    // const start = allPlayersOk();
     const user = getUser(socket.id);
-    console.log("start", user);
-    const currentBoard = getNewBoard(); //need to write
-    const mainBoard = getMainBoard(); //need to write
+    // if (allPlayersOk(user.room)) {
+    rollDice();
     io.in(user.room).emit("started", {
       index: index,
-      currentBoard: currentBoard,
-      mainBoard: mainBoard,
+      diceSet: getDiceSet(),
+      diceArray: setDiceArray(),
     });
+    // }
   });
 
   socket.on("sendMessage", (message, callback) => {

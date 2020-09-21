@@ -3,9 +3,10 @@ import React from "react";
 const MainWindow = (props) => {
   const tempPlayerBoard = "";
   const moves = props.moves;
-  if (!props.playerBoard.length) return <p>loading</p>;
-  if (!props.diceArray.length) return <p>loading</p>;
-  console.log(props.dice);
+  console.log(props);
+  console.log(props.playerBoard);
+  if (!props.playerBoard.length) return <p> player board loading</p>;
+  if (!props.diceArray.length) return <p>dice loading</p>;
 
   return (
     <div className="main-window">
@@ -1601,8 +1602,16 @@ const MainWindow = (props) => {
       </div>
       <div className="main-window__dice-container">
         <div className="main-window__dice-set">
+          <h2>Diced Rolled</h2>
+          <div className="main-window__dice">
+            <div className="main-window__die">{props.diceSet[0]}</div>
+            <div className="main-window__die">{props.diceSet[1]}</div>
+            <div className="main-window__die">{props.diceSet[2]}</div>
+            <div className="main-window__die">{props.diceSet[3]}</div>
+          </div>
+          <h2>Dice Results</h2>
           <div className="main-window__dice-all">
-            {props.diceArray[0].set1 && props.diceArray[0].set2 ? (
+            {!props.diceArray[0].set1 && !props.diceArray[0].set2 ? (
               <button
                 className="main-window__dice-selection"
                 onClick={() => {
@@ -1621,7 +1630,7 @@ const MainWindow = (props) => {
                 </div>
               </button>
             ) : null}
-            {props.diceArray[0].set1 && !props.diceArray[0].set2 ? (
+            {!props.diceArray[0].set1 && props.diceArray[0].set2 ? (
               <>
                 <button
                   className="main-window__dice-selection"
@@ -1638,7 +1647,7 @@ const MainWindow = (props) => {
                 </div>
               </>
             ) : null}
-            {!props.diceArray[0].set1 && !props.diceArray[0].set2 ? (
+            {props.diceArray[0].set1 && props.diceArray[0].set2 ? (
               <>
                 <div className="main-window__die">
                   {props.diceArray[0].dice.set1}
@@ -1648,7 +1657,7 @@ const MainWindow = (props) => {
                 </div>
               </>
             ) : null}
-            {!props.diceArray[0].set1 && props.diceArray[0].set2 ? (
+            {props.diceArray[0].set1 && !props.diceArray[0].set2 ? (
               <>
                 <div className="main-window__die">
                   {props.diceArray[0].dice.set1}
@@ -1669,7 +1678,7 @@ const MainWindow = (props) => {
         </div>
         <div className="main-window__dice-set">
           <div className="main-window__dice-all">
-            {props.diceArray[1].se1 && props.diceArray[1].set2 ? (
+            {!props.diceArray[1].se1 && !props.diceArray[1].set2 ? (
               <button
                 className="main-window__dice-selection"
                 onClick={() => {
@@ -1688,7 +1697,7 @@ const MainWindow = (props) => {
                 </div>
               </button>
             ) : null}
-            {props.diceArray[1].set1 && !props.diceArray[1].set2 ? (
+            {!props.diceArray[1].set1 && props.diceArray[1].set2 ? (
               <>
                 <button
                   className="main-window__dice-selection"
@@ -1706,7 +1715,7 @@ const MainWindow = (props) => {
                 </div>
               </>
             ) : null}
-            {!props.diceArray[1].set1 && !props.diceArray[1].set2 ? (
+            {props.diceArray[1].set1 && props.diceArray[1].set2 ? (
               <>
                 <div className="main-window__die">
                   {props.diceArray[1].dice.set1}
@@ -1716,7 +1725,7 @@ const MainWindow = (props) => {
                 </div>
               </>
             ) : null}
-            {!props.diceArray[1].set1 && props.diceArray[1].set2 ? (
+            {props.diceArray[1].set1 && !props.diceArray[1].set2 ? (
               <>
                 <div className="main-window__die">
                   {props.diceArray[1].dice.set1}
@@ -1738,14 +1747,16 @@ const MainWindow = (props) => {
         </div>
         <div className="main-window__dice-set">
           <div className="main-window__dice-all">
-            {props.diceArray[2].se1 && props.diceArray[2].set2 ? (
+            {!props.diceArray[2].se1 && !props.diceArray[2].set2 ? (
               <button
                 className="main-window__dice-selection"
-                onClick={props.setMoves([
-                  ...moves,
-                  props.diceArray[2].dice.set1,
-                  props.diceArray[2].dice.set2,
-                ])}
+                onClick={() => {
+                  props.setMoves([
+                    ...moves,
+                    props.diceArray[2].dice.set1,
+                    props.diceArray[2].dice.set2,
+                  ]);
+                }}
               >
                 <div className="main-window__die">
                   {props.diceArray[2].dice.set1}
@@ -1755,7 +1766,7 @@ const MainWindow = (props) => {
                 </div>
               </button>
             ) : null}
-            {props.diceArray[2].set1 && !props.diceArray[2].set2 ? (
+            {!props.diceArray[2].set1 && props.diceArray[2].set2 ? (
               <>
                 <button
                   className="main-window__dice-selection"
@@ -1773,7 +1784,7 @@ const MainWindow = (props) => {
                 </div>
               </>
             ) : null}
-            {!props.diceArray[2].set1 && !props.diceArray[2].set2 ? (
+            {props.diceArray[2].set1 && props.diceArray[2].set2 ? (
               <>
                 <div className="main-window__die">
                   {props.diceArray[2].dice.set1}
@@ -1783,7 +1794,7 @@ const MainWindow = (props) => {
                 </div>
               </>
             ) : null}
-            {!props.diceArray[2].set1 && props.diceArray[2].set2 ? (
+            {props.diceArray[2].set1 && !props.diceArray[2].set2 ? (
               <>
                 <div className="main-window__die">
                   {props.diceArray[2].dice.set1}
